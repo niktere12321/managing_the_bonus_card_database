@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %}
+Все карты
+{% endblock %}
+{% block content %}
+  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h1 class="text-center-main">
+      Все карты
+    </h1>
+    <form action="" method="get">
+      {{ filter.form.as_p }}
+      <input type="submit" />
+    </form>
+    <table>
+      <tr>
+        <td>Серия</td>
+        <td>Номер</td>
+        <td>Дата выпуска</td>
+        <td>Дата окончания активности</td>
+        <td>Статус</td>
+      </tr>
+      {% for card in object_list %}
+      <tr>
+        <td>{{ card.card_series }}</td>
+        <td>{{ card.number_card }}</td>
+        <td>{{ card.date_card_start }}</td>
+        <td>{{ card.date_card_end }}</td>
+        <td>{{ card.status }}</td>
+        <td>
+          <button>
+            <a href="{% url 'cards:get_informathion' card.pk %}">
+              Подробнее
+            </a>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="pagination">
+      <span class="step-links">
+          {% if page_obj.has_previous %}
+            {% if filter %}
+              <a href="?page=1&filter=passed">&laquo; Первая</a>
+              <a href="?page={{ page_obj.previous_page_number }}&filter=passed">предыдущая</a>
+            {% else %}
+              <a href="?page=1">&laquo; Первая</a>
+              <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+              {% endif %}
+          {% endif %}
+
+          <span class="current">
+              Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+          </span>
+
+          {% if page_obj.has_next %}
+            {% if filter %}
+              <a href="?page={{ page_obj.next_page_number }}&filter=passed">&laquo; следующая</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}&filter=passed">последняя</a>
+            {% else %}
+              <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+          {% endif %}
+      </span>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %}
+Карта {{ object }}
+{% endblock %}
+{% block content %}
+  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <p>Серия карты: {{ object.card_series }}</p>
+    <p>Номер карты: {{ object.number_card }}</p>
+    <p>Статус карты: {{ object.status }}</p>
+    <p>Дата выпуска карты: {{ object.date_card_start }}</p>
+    <p>Дата окончания активности карты: {{ object.date_card_end }}</p>
+    {% if card_open %}
+      <button>
+        <a href="{% url 'cards:edit_card' object.pk %}">
+          Изменить Статус
+        </a>
+      </button>
+    {% endif %}
+    <button>
+      <a href="{% url 'cards:delete_card' object.pk %}">
+        Удалить карту
+      </a>
+    </button>
+    <ul>
+      {% for pay in pays %}
+      <li>
+        Сумма: {{pay.amount}}
+        Дата: {{pay.pub_date}}
+      </li>
+      {% endfor %}
+    </ul>
+    <button>
+      <a href="{% url 'cards:create_pay' object.pk %}">
+        Добавить оплату
+      </a>
+    </button>
+  </div>
+
+{% endblock %}

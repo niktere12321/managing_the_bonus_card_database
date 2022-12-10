@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %}
+Создание
+{% endblock %}
+{% block content %}
+  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+  </div>
+
+{% endblock %}
