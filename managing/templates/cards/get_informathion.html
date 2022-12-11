@@ -30,11 +30,13 @@
       </li>
       {% endfor %}
     </ul>
-    <button>
-      <a href="{% url 'cards:create_pay' object.pk %}">
-        Добавить оплату
-      </a>
-    </button>
+    {% if pay_open %}
+      <button>
+        <a href="{% url 'cards:create_pay' object.pk %}">
+          Добавить оплату
+        </a>
+      </button>
+    {% endif %}
   </div>
 
 {% endblock %}

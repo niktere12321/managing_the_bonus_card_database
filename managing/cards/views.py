@@ -39,6 +39,8 @@ class GetResult(generic.DetailView):
         context = super().get_context_data(**kwargs)
         if self.object.status != Cards.OVERDUE:
             context["card_open"] = True
+        if self.object.status == Cards.ACTIVATED:
+            context["pay_open"] = True
         context["pays"] = Pay.objects.filter(card=self.object.pk)
         return context
 
